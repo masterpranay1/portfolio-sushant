@@ -111,13 +111,14 @@ export default function AboutSection() {
               sushant730181@gmail.com
             </a>
             <div className="flex gap-4 mt-4">
-              {/* Social Icons Placeholder */}
-              <div className="w-10 h-10 border border-[#ededed]/20 rounded-full flex items-center justify-center hover:bg-[#ffb703] hover:text-black transition-colors cursor-pointer">
+              <a
+                href="https://www.instagram.com/aarambh_0/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 border border-[#ededed]/20 rounded-full flex items-center justify-center hover:bg-[#ffb703] hover:text-black transition-colors cursor-pointer"
+              >
                 IG
-              </div>
-              <div className="w-10 h-10 border border-[#ededed]/20 rounded-full flex items-center justify-center hover:bg-[#ffb703] hover:text-black transition-colors cursor-pointer">
-                LI
-              </div>
+              </a>
             </div>
           </div>
         </div>
