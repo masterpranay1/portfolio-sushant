@@ -15,45 +15,55 @@ export default function AboutSection() {
 
   useGSAP(
     () => {
+      // Set initial states to avoid FOUC and ensure "from" logic is handled manually
+      gsap.set([leftColRef.current, rightColRef.current], {
+        opacity: 0,
+        x: (index) => (index === 0 ? -50 : 50), // left col -50, right col +50
+      });
+
+      const listItems = rightColRef.current?.querySelectorAll("li");
+      if (listItems && listItems.length > 0) {
+        gsap.set(listItems, { opacity: 0, y: 20 });
+      }
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 80%",
           end: "bottom 20%",
           toggleActions: "play none none reverse",
+          onLeave: () => {}, // Optional: ensure state persists
         },
       });
 
-      tl.from(leftColRef.current, {
-        x: -50,
-        opacity: 0,
+      tl.to(leftColRef.current, {
+        x: 0,
+        opacity: 1,
         duration: 1,
         ease: "power3.out",
-      }).from(
+      }).to(
         rightColRef.current,
         {
-          x: 50,
-          opacity: 0,
+          x: 0,
+          opacity: 1,
           duration: 1,
           ease: "power3.out",
         },
         "-=0.8",
       );
 
-      // Animate list items in right column
-      const listItems = rightColRef.current?.querySelectorAll("li");
-      if (listItems) {
-        gsap.from(listItems, {
-          scrollTrigger: {
-            trigger: rightColRef.current,
-            start: "top 85%",
+      if (listItems && listItems.length > 0) {
+        tl.to(
+          listItems,
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.1,
+            duration: 0.6,
+            ease: "power2.out",
           },
-          y: 20,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "power2.out",
-        });
+          "-=0.5",
+        );
       }
     },
     { scope: containerRef },
