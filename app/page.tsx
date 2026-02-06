@@ -91,11 +91,12 @@ export default function Home() {
         >
           <div className="relative w-[80%] h-[80%] max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-2xl brightness-75">
             <Image
-              src="/hero/hero.webp"
+              src="/extra/extra.webp"
               alt="Cinematic Portfolio Background"
               fill
               className="object-cover"
               priority
+              unoptimized
             />
             {/* Film grain or overlay effect could be added here */}
             <div className="absolute inset-0 bg-black/20 mix-blend-overlay"></div>
