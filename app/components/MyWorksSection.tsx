@@ -64,7 +64,7 @@ export default function MyWorksSection() {
     <section
       id="my-works"
       ref={containerRef}
-      className="relative w-full min-h-screen bg-[#050505] text-[#ededed] py-32 overflow-hidden flex items-center justify-center"
+      className="relative w-full min-h-screen bg-[#050505] text-[#ededed] py-16 overflow-hidden flex items-center justify-center"
     >
       {/* Animated Background Marquee */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full select-none opacity-30 z-0 pointer-events-none transform -skew-y-3 scale-110">
@@ -81,17 +81,24 @@ export default function MyWorksSection() {
       {/* Video Container */}
       <div
         ref={imageContainerRef}
-        className="relative z-10 w-[80%] md:w-[70%] max-w-6xl aspect-video rounded-3xl overflow-hidden border-2 border-[#ffb703]/30 shadow-[0_0_50px_rgba(255,183,3,0.1)] group perspective-1000"
+        className="relative z-10 w-[80%] md:w-[70%] max-w-6xl aspect-9/16 md:aspect-video rounded-3xl overflow-hidden border-2 border-[#ffb703]/30 shadow-[0_0_50px_rgba(255,183,3,0.1)] group perspective-1000"
       >
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500 z-10"></div>
 
         <Image
           src="/my-works/works.webp"
-          alt="My Works Showreel"
+          alt="My Works Showreel Desktop"
           fill
           unoptimized
-          className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+          className="hidden md:block object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+        />
+        <Image
+          src="/my-works/works-mobile.webp"
+          alt="My Works Showreel Mobile"
+          fill
+          unoptimized
+          className="block md:hidden object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
         />
 
         {/* Creative Label Overlay */}
