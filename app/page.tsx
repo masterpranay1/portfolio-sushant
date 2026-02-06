@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import CustomCursor from "./components/CustomCursor";
 import AboutSection from "./components/AboutSection";
 import MyWorksSection from "./components/MyWorksSection";
+import ShowcaseVideos from "./components/ShowcaseVideos";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -164,6 +165,7 @@ export default function Home() {
       </div>
       <AboutSection />
       <MyWorksSection />
+      <ShowcaseVideos />
     </>
   );
 }
