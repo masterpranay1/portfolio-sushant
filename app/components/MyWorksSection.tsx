@@ -34,7 +34,7 @@ export default function MyWorksSection() {
       if (marqueeRef.current) {
         gsap.to(marqueeRef.current, {
           xPercent: -50,
-          duration: 40, // Slower speed
+          duration: 5, // Slower speed
           ease: "none",
           repeat: -1,
         });
@@ -49,7 +49,7 @@ export default function MyWorksSection() {
           scrub: 1.5,
         },
         y: -100,
-        rotation: 3,
+        rotation: 0,
         scale: 1.1,
         ease: "none",
       });
