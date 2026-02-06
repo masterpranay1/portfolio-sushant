@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import CustomCursor from "./components/CustomCursor";
 import AboutSection from "./components/AboutSection";
+import MyWorksSection from "./components/MyWorksSection";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -136,6 +137,19 @@ export default function Home() {
             >
               @aarambh_0
             </a>
+            <div className="mt-4">
+              <span className="opacity-50 block text-xs mb-1">NAVIGATION</span>
+              <button
+                onClick={() => {
+                  document
+                    .getElementById("my-works")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="text-[#ffb703] hover:underline decoration-2 underline-offset-4 decoration-white hover:decoration-[#ffb703] transition-all duration-300 text-left uppercase font-bold tracking-wider"
+              >
+                View Works
+              </button>
+            </div>
           </div>
         </div>
 
@@ -148,6 +162,7 @@ export default function Home() {
         </div>
       </div>
       <AboutSection />
+      <MyWorksSection />
     </>
   );
 }
