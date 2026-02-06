@@ -1,65 +1,149 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import CustomCursor from "./components/CustomCursor";
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      // Safe to useGSAP in client component
+      const tl = gsap.timeline();
+
+      tl.from(imageRef.current, {
+        scale: 1.2,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power3.out",
+      })
+        .from(
+          titleRef.current,
+          {
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+          },
+          "-=1",
+        )
+        .from(
+          contactRef.current,
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          "-=0.5",
+        );
+
+      // Parallax effect on mouse move
+      const handleMouseMove = (e: MouseEvent) => {
+        const { clientX, clientY } = e;
+        const xPos = (clientX / window.innerWidth - 0.5) * 20;
+        const yPos = (clientY / window.innerHeight - 0.5) * 20;
+
+        if (titleRef.current) {
+          gsap.to(titleRef.current, {
+            x: xPos,
+            y: yPos,
+            duration: 1,
+            ease: "power1.out",
+          });
+        }
+        if (imageRef.current) {
+          gsap.to(imageRef.current, {
+            x: -xPos * 0.5,
+            y: -yPos * 0.5,
+            duration: 1,
+            ease: "power1.out",
+          });
+        }
+      };
+
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
+    },
+    { scope: containerRef },
+  ); // Scope animations to container
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div
+      ref={containerRef}
+      className="relative h-screen w-full overflow-hidden bg-[#050505] text-[#ededed] font-[family-name:var(--font-outfit)] selection:bg-[#ffb703] selection:text-black"
+    >
+      <CustomCursor />
+
+      {/* Hero Image Background */}
+      <div
+        ref={imageRef}
+        className="absolute inset-0 z-0 flex items-center justify-center opacity-80"
+      >
+        <div className="relative w-[80%] h-[80%] max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-2xl brightness-75">
+          <Image
+            src="/hero/hero.webp"
+            alt="Cinematic Portfolio Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Film grain or overlay effect could be added here */}
+          <div className="absolute inset-0 bg-black/20 mix-blend-overlay"></div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+      </div>
+
+      {/* Main Content */}
+      <main className="relative z-10 flex flex-col items-center justify-center h-full w-full pointer-events-none">
+        <h1
+          ref={titleRef}
+          className="text-[12vw] font-bold leading-none tracking-tighter text-[#ffb703] drop-shadow-2xl mix-blend-difference pointer-events-auto cursor-default"
+        >
+          PORTFOLIO
+        </h1>
       </main>
+
+      {/* Contact Info */}
+      <div
+        ref={contactRef}
+        className="absolute bottom-8 left-8 z-20 flex flex-col gap-2 text-sm md:text-base font-medium tracking-wide"
+      >
+        <div>
+          <span className="opacity-50 block text-xs mb-1">EMAIL</span>
+          <a
+            href="mailto:sushant730181@gmail.com"
+            className="hover:text-[#ffb703] transition-colors duration-300"
+          >
+            sushant730181@gmail.com
+          </a>
+        </div>
+
+        <div className="mt-4">
+          <span className="opacity-50 block text-xs mb-1">FOLLOW ME</span>
+          <a
+            href="https://www.instagram.com/aarambh_0/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#ffb703] hover:underline decoration-2 underline-offset-4 decoration-white hover:decoration-[#ffb703] transition-all duration-300"
+          >
+            @aarambh_0
+          </a>
+        </div>
+      </div>
+
+      {/* Decor text */}
+      <div className="absolute top-8 left-8 z-20 text-xs font-bold tracking-[0.2em] opacity-50 uppercase vertically-text hidden md:block">
+        Designer & Editor
+      </div>
+      <div className="absolute top-8 right-8 z-20 text-xs font-bold tracking-[0.2em] opacity-50 uppercase hidden md:block">
+        2026 / Portfolio
+      </div>
     </div>
   );
 }
