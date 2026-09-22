@@ -8,8 +8,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Sushant Raj - Portfolio",
-  description: "Video Editor and Designer from India",
+  title: "Sushant Raj — Video Editor & Colorist",
+  description:
+    "Video editor specializing in motion graphics, explainer videos, ads & commercials, and cinematic color grading.",
 };
 
 export default function RootLayout({
